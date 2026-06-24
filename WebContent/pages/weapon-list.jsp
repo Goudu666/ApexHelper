@@ -25,7 +25,8 @@
                         <th>名称</th>
                         <th>英文名</th>
                         <th>类型</th>
-                        <th>伤害</th>
+                        <th>身体伤害</th>
+                        <th>头部伤害</th>
                         <th>弹药</th>
                         <th>推荐场景</th>
                     </tr>
@@ -37,6 +38,7 @@
                             <td>${weapon.englishName}</td>
                             <td>${weapon.weaponType}</td>
                             <td>${weapon.damage}</td>
+                            <td>${weapon.headDamage}</td>
                             <td>${weapon.ammoType}</td>
                             <td>${weapon.recommendScene}</td>
                         </tr>

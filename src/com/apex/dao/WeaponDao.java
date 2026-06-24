@@ -19,7 +19,7 @@ public class WeaponDao {
      */
     public List<Weapon> findAll() {
         List<Weapon> weapons = new ArrayList<Weapon>();
-        String sql = "SELECT id, name, english_name, weapon_type, damage, ammo_type, recommend_scene "
+        String sql = "SELECT id, name, english_name, weapon_type, damage, head_damage, ammo_type, recommend_scene "
                 + "FROM t_weapon ORDER BY id ASC";
 
         try (Connection conn = DBUtil.getConnection();
@@ -64,6 +64,7 @@ public class WeaponDao {
         weapon.setEnglishName(rs.getString("english_name"));
         weapon.setWeaponType(rs.getString("weapon_type"));
         weapon.setDamage(rs.getInt("damage"));
+        weapon.setHeadDamage(rs.getInt("head_damage"));
         weapon.setAmmoType(rs.getString("ammo_type"));
         weapon.setRecommendScene(rs.getString("recommend_scene"));
         return weapon;

@@ -1,87 +1,43 @@
--- ApexHelper MySQL initialization script.
--- Target database: MySQL, charset utf8mb4.
--- Run this script before the course-design demo.
-
-CREATE DATABASE IF NOT EXISTS apex_helper
-  DEFAULT CHARACTER SET utf8mb4
-  DEFAULT COLLATE utf8mb4_unicode_ci;
+-- Refresh only Apex legend and weapon data.
+-- This script keeps users, notes, player stats, and logs.
 
 USE apex_helper;
 
-DROP TABLE IF EXISTS t_system_log;
-DROP TABLE IF EXISTS t_tactic_note;
-DROP TABLE IF EXISTS t_log;
-DROP TABLE IF EXISTS t_strategy_note;
-DROP TABLE IF EXISTS t_player_stats;
-DROP TABLE IF EXISTS t_player_stat;
-DROP TABLE IF EXISTS t_weapon;
-DROP TABLE IF EXISTS t_legend;
-DROP TABLE IF EXISTS t_user;
+SET @has_legend_english = (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 't_legend' AND COLUMN_NAME = 'english_name'
+);
+SET @sql = IF(@has_legend_english = 0,
+  'ALTER TABLE t_legend ADD COLUMN english_name VARCHAR(80) NOT NULL AFTER name',
+  'DO 0');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
-CREATE TABLE t_user (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  username VARCHAR(50) NOT NULL UNIQUE,
-  password VARCHAR(100) NOT NULL,
-  avatar VARCHAR(255) DEFAULT 'static/img/default-avatar.png',
-  role VARCHAR(20) NOT NULL DEFAULT 'user',
-  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+SET @has_weapon_english = (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 't_weapon' AND COLUMN_NAME = 'english_name'
+);
+SET @sql = IF(@has_weapon_english = 0,
+  'ALTER TABLE t_weapon ADD COLUMN english_name VARCHAR(80) NOT NULL AFTER name',
+  'DO 0');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
-CREATE TABLE t_legend (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(50) NOT NULL,
-  english_name VARCHAR(80) NOT NULL,
-  position VARCHAR(50) NOT NULL,
-  skill_desc TEXT NOT NULL,
-  tactic_tip TEXT NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+SET @has_head_damage = (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 't_weapon' AND COLUMN_NAME = 'head_damage'
+);
+SET @sql = IF(@has_head_damage = 0,
+  'ALTER TABLE t_weapon ADD COLUMN head_damage INT NOT NULL DEFAULT 0 AFTER damage',
+  'DO 0');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
-CREATE TABLE t_weapon (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(50) NOT NULL,
-  english_name VARCHAR(80) NOT NULL,
-  weapon_type VARCHAR(50) NOT NULL,
-  damage INT NOT NULL DEFAULT 0,
-  head_damage INT NOT NULL DEFAULT 0,
-  ammo_type VARCHAR(50) NOT NULL,
-  recommend_scene TEXT NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE t_tactic_note (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  title VARCHAR(100) NOT NULL,
-  map_name VARCHAR(50) NOT NULL,
-  legend_name VARCHAR(50) NOT NULL,
-  content TEXT NOT NULL,
-  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT fk_tactic_note_user FOREIGN KEY (user_id) REFERENCES t_user(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE t_player_stat (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  nickname VARCHAR(50) NOT NULL UNIQUE,
-  rank_name VARCHAR(50) NOT NULL,
-  total_kills INT NOT NULL DEFAULT 0,
-  total_damage INT NOT NULL DEFAULT 0,
-  wins INT NOT NULL DEFAULT 0,
-  main_legend VARCHAR(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE t_system_log (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  user_id INT,
-  username VARCHAR(50),
-  action_type VARCHAR(50) NOT NULL,
-  action_content VARCHAR(255) NOT NULL,
-  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_system_log_user FOREIGN KEY (user_id) REFERENCES t_user(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-INSERT INTO t_user (username, password, avatar, role) VALUES
-('admin', 'admin123', 'static/img/default-avatar.png', 'admin'),
-('player', 'player123', 'static/img/default-avatar.png', 'user');
+DELETE FROM t_legend;
+ALTER TABLE t_legend AUTO_INCREMENT = 1;
 
 INSERT INTO t_legend (name, english_name, position, skill_desc, tactic_tip) VALUES
 ('寻血猎犬', 'Bloodhound', '侦察', '追踪器、上帝之眼、狩猎野兽。能扫描前方敌人并追踪敌人活动痕迹。', '进攻前先扫描确认人数，追击时注意不要和队友脱节。'),
@@ -113,6 +69,9 @@ INSERT INTO t_legend (name, english_name, position, skill_desc, tactic_tip) VALU
 ('琉雀', 'Sparrow', '侦察', '以追踪箭和陷阱提供侦察与区域干扰。', '先用侦察能力确认敌人位置，再用陷阱限制绕后路线。'),
 ('艾克赛尔', 'Axle', '游击', '6月24日最新版本中的新传奇，强调突破、近战压制和队伍推进。', '适合配合霰弹枪或冲锋枪强压房区，开团前让队友跟上节奏。');
 
+DELETE FROM t_weapon;
+ALTER TABLE t_weapon AUTO_INCREMENT = 1;
+
 INSERT INTO t_weapon (name, english_name, weapon_type, damage, head_damage, ammo_type, recommend_scene) VALUES
 ('哈沃克步枪', 'HAVOC Rifle', '突击步枪', 18, 32, '能量弹药', '中近距离持续输出强，搭配涡轮增压器手感更好。'),
 ('赫姆洛克连发突击步枪', 'Hemlok Burst AR', '突击步枪', 21, 35, '重型弹药', '三连发适合中距离点射，控枪稳定时压制力很强。'),
@@ -143,18 +102,3 @@ INSERT INTO t_weapon (name, english_name, weapon_type, damage, head_damage, ammo
 ('RE-45自动手枪', 'RE-45 Auto', '手枪', 12, 18, '能量弹药', '射速快，适合前期和近距离补伤害。'),
 ('P2020手枪', 'P2020', '手枪', 18, 27, '轻型弹药', '前期和副武器过渡稳定。'),
 ('辅助手枪', 'Wingman', '手枪', 50, 95, '狙击弹药', '单发伤害高，适合中近距离精准点射。');
-
-INSERT INTO t_tactic_note (user_id, title, map_name, legend_name, content) VALUES
-(2, '破碎月中圈转移', '破碎月', '恶灵', '第二圈开始提前观察轨道站附近队伍，必要时用传送门带队友绕开正面交火。'),
-(2, '奥林匹斯高点防守', '奥林匹斯', '地平线', '先占住宅区屋顶，用重力电梯保持高点压制，被集火时马上换楼顶。');
-
-INSERT INTO t_player_stat (nickname, rank_name, total_kills, total_damage, wins, main_legend) VALUES
-('ImperialHal', '大师', 120000, 9800000, 8200, '班加罗尔'),
-('iiTzTimmy', '大师', 95000, 7600000, 6100, '地平线'),
-('Ras', '猎杀者', 110000, 9000000, 7800, '恶灵'),
-('ApexStudent', '黄金', 2300, 410000, 120, '命脉'),
-('StormPointMain', '白金', 8600, 1330000, 540, '寻血猎犬');
-
-INSERT INTO t_system_log (user_id, username, action_type, action_content) VALUES
-(1, 'admin', '初始化', '系统初始化管理员账号'),
-(2, 'player', '初始化', '系统初始化普通用户账号和示例笔记');

@@ -9,6 +9,7 @@ public class Weapon {
     private String englishName;
     private String weaponType;
     private int damage;
+    private int headDamage;
     private String ammoType;
     private String recommendScene;
 
@@ -53,6 +54,14 @@ public class Weapon {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public int getHeadDamage() {
+        return headDamage;
+    }
+
+    public void setHeadDamage(int headDamage) {
+        this.headDamage = headDamage;
     }
 
     public String getAmmoType() {
