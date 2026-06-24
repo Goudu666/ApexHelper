@@ -1,0 +1,12 @@
+{
+    "java.project.sourcePaths": [
+      "src"
+    ],
+    "java.project.outputPath": "WebContent/WEB-INF/classes",
+    "java.project.referencedLibraries": [
+      "WebContent/WEB-INF/lib/**/*.jar",
+      "/home/jy/apps/tomcat9/lib/servlet-api.jar",
+      "/home/jy/apps/tomcat9/lib/jsp-api.jar"
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic"
+  }

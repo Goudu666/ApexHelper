@@ -1,0 +1,1 @@
+// ApexHelper global JavaScript placeholder.

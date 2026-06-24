@@ -1,0 +1,7 @@
+WebContent/WEB-INF/classes/
+*.class
+.DS_Store
+*.log
+logs/
+tmp/
+temp/
