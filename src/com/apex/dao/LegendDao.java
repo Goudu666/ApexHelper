@@ -19,7 +19,7 @@ public class LegendDao {
      */
     public List<Legend> findAll() {
         List<Legend> legends = new ArrayList<Legend>();
-        String sql = "SELECT id, name, position, skill_desc, tactic_tip FROM t_legend ORDER BY id ASC";
+        String sql = "SELECT id, name, english_name, position, skill_desc, tactic_tip FROM t_legend ORDER BY id ASC";
 
         try (Connection conn = DBUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class LegendDao {
      * 根据 id 查询单个传奇。
      */
     public Legend findById(int id) {
-        String sql = "SELECT id, name, position, skill_desc, tactic_tip FROM t_legend WHERE id = ?";
+        String sql = "SELECT id, name, english_name, position, skill_desc, tactic_tip FROM t_legend WHERE id = ?";
 
         try (Connection conn = DBUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -82,6 +82,7 @@ public class LegendDao {
         Legend legend = new Legend();
         legend.setId(rs.getInt("id"));
         legend.setName(rs.getString("name"));
+        legend.setEnglishName(rs.getString("english_name"));
         legend.setPosition(rs.getString("position"));
         legend.setSkillDesc(rs.getString("skill_desc"));
         legend.setTacticTip(rs.getString("tactic_tip"));

@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th>名称</th>
+                        <th>英文名</th>
                         <th>定位</th>
                         <th>技能说明</th>
                         <th>战术建议</th>
@@ -32,6 +33,7 @@
                     <c:forEach var="legend" items="${legends}">
                         <tr>
                             <td>${legend.name}</td>
+                            <td>${legend.englishName}</td>
                             <td>${legend.position}</td>
                             <td>${legend.skillDesc}</td>
                             <td>${legend.tacticTip}</td>

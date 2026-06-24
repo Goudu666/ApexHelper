@@ -6,6 +6,7 @@ package com.apex.bean;
 public class Legend {
     private int id;
     private String name;
+    private String englishName;
     private String position;
     private String skillDesc;
     private String tacticTip;
@@ -27,6 +28,14 @@ public class Legend {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
     }
 
     public String getPosition() {

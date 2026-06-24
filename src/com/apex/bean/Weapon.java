@@ -6,6 +6,7 @@ package com.apex.bean;
 public class Weapon {
     private int id;
     private String name;
+    private String englishName;
     private String weaponType;
     private int damage;
     private String ammoType;
@@ -28,6 +29,14 @@ public class Weapon {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
     }
 
     public String getWeaponType() {

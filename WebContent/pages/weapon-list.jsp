@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th>名称</th>
+                        <th>英文名</th>
                         <th>类型</th>
                         <th>伤害</th>
                         <th>弹药</th>
@@ -33,6 +34,7 @@
                     <c:forEach var="weapon" items="${weapons}">
                         <tr>
                             <td>${weapon.name}</td>
+                            <td>${weapon.englishName}</td>
                             <td>${weapon.weaponType}</td>
                             <td>${weapon.damage}</td>
                             <td>${weapon.ammoType}</td>
