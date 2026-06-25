@@ -9,29 +9,35 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell narrow">
-        <div class="hero">
+    <div class="entry-shell">
+        <section class="entry-hero">
+            <p class="hud-kicker">APEX//HELPER</p>
             <h1>Apex Legends 战术整备与数据助手系统</h1>
             <p>传统 JavaWeb 课程设计演示版：JSP + Servlet + JavaBean + DAO + JDBC + MySQL。</p>
             <div class="actions">
                 <a class="btn primary" href="${pageContext.request.contextPath}/login.jsp">登录</a>
                 <a class="btn" href="${pageContext.request.contextPath}/register.jsp">注册</a>
             </div>
+        </section>
+
+        <aside class="entry-status hud-panel">
+            <span class="hud-label">TACTICAL COMPANION</span>
+            <strong>READY</strong>
+            <p>传奇数据、武器数据、战术笔记、模拟战绩和后台统计已就绪。</p>
             <c:if test="${not empty sessionScope.user}">
-                <p class="tip">
-                    当前已登录：
-                    <strong>${sessionScope.user.username}</strong>
+                <div class="entry-session">
+                    <span>当前已登录：${sessionScope.user.username}</span>
                     <c:choose>
                         <c:when test="${sessionScope.user.role == 'admin'}">
-                            <a href="${pageContext.request.contextPath}/admin/dashboard">进入管理员首页</a>
+                            <a class="btn small" href="${pageContext.request.contextPath}/admin/dashboard">进入管理员首页</a>
                         </c:when>
                         <c:otherwise>
-                            <a href="${pageContext.request.contextPath}/user/home">进入用户首页</a>
+                            <a class="btn small" href="${pageContext.request.contextPath}/user/home">进入用户首页</a>
                         </c:otherwise>
                     </c:choose>
-                </p>
+                </div>
             </c:if>
-        </div>
+        </aside>
     </div>
 </body>
 </html>

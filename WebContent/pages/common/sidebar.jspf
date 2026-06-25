@@ -1,0 +1,62 @@
+<%-- 公共侧边栏：根据 sessionScope.user.role 显示用户或管理员导航。 --%>
+<aside class="hud-sidebar">
+    <a class="hud-brand" href="${pageContext.request.contextPath}/index.jsp">
+        <span class="hud-brand-mark">AH</span>
+        <span>
+            <strong>APEX//HELPER</strong>
+            <small>TACTICAL COMPANION</small>
+        </span>
+    </a>
+
+    <div class="hud-operator">
+        <span class="hud-label">OPERATOR</span>
+        <strong>${sessionScope.user.username}</strong>
+        <small>${sessionScope.user.role}</small>
+    </div>
+
+    <nav class="hud-nav">
+        <c:choose>
+            <c:when test="${sessionScope.user.role == 'admin'}">
+                <a class="hud-nav-item ${activeNav == 'admin-dashboard' ? 'active' : ''}" href="${pageContext.request.contextPath}/admin/dashboard">
+                    <span class="hud-nav-code">01</span>
+                    <span>系统统计</span>
+                </a>
+                <a class="hud-nav-item ${activeNav == 'admin-users' ? 'active' : ''}" href="${pageContext.request.contextPath}/admin/users">
+                    <span class="hud-nav-code">02</span>
+                    <span>用户列表</span>
+                </a>
+                <a class="hud-nav-item ${activeNav == 'admin-logs' ? 'active' : ''}" href="${pageContext.request.contextPath}/admin/logs">
+                    <span class="hud-nav-code">03</span>
+                    <span>系统日志</span>
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a class="hud-nav-item ${activeNav == 'home' ? 'active' : ''}" href="${pageContext.request.contextPath}/user/home">
+                    <span class="hud-nav-code">01</span>
+                    <span>控制台</span>
+                </a>
+                <a class="hud-nav-item ${activeNav == 'legend' ? 'active' : ''}" href="${pageContext.request.contextPath}/legend/list">
+                    <span class="hud-nav-code">02</span>
+                    <span>传奇数据</span>
+                </a>
+                <a class="hud-nav-item ${activeNav == 'weapon' ? 'active' : ''}" href="${pageContext.request.contextPath}/weapon/list">
+                    <span class="hud-nav-code">03</span>
+                    <span>武器数据</span>
+                </a>
+                <a class="hud-nav-item ${activeNav == 'note' ? 'active' : ''}" href="${pageContext.request.contextPath}/note/list">
+                    <span class="hud-nav-code">04</span>
+                    <span>战术笔记</span>
+                </a>
+                <a class="hud-nav-item ${activeNav == 'stat' ? 'active' : ''}" href="${pageContext.request.contextPath}/stat/search">
+                    <span class="hud-nav-code">05</span>
+                    <span>模拟战绩</span>
+                </a>
+            </c:otherwise>
+        </c:choose>
+    </nav>
+
+    <div class="hud-sidebar-foot">
+        <span>SESSION LIVE</span>
+        <a href="${pageContext.request.contextPath}/logout">退出登录</a>
+    </div>
+</aside>
