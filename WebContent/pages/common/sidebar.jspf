@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%-- 公共侧边栏：根据 sessionScope.user.role 显示用户或管理员导航。 --%>
 <aside class="hud-sidebar">
     <a class="hud-brand" href="${pageContext.request.contextPath}/index.jsp">

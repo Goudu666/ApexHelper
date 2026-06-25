@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%-- 公共顶部栏：显示当前页面标题和运行状态。 --%>
 <header class="hud-top">
     <div>
