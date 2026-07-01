@@ -9,39 +9,38 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell">
-        <div class="topbar">
-            <div>
-                <h1>传奇数据</h1>
-                <p class="muted">定位、技能说明和战术建议来自数据库初始化数据。</p>
-            </div>
-            <a class="btn" href="${pageContext.request.contextPath}/user/home">返回首页</a>
-        </div>
+    <c:set var="activeNav" value="legend" />
+    <c:set var="pageMeta" value="LEGEND INTEL" />
+    <c:set var="pageTitle" value="传奇数据" />
+    <c:set var="pageSubtitle" value="定位、技能说明和战术建议来自数据库初始化数据。" />
 
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>名称</th>
-                        <th>英文名</th>
-                        <th>定位</th>
-                        <th>技能说明</th>
-                        <th>战术建议</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="legend" items="${legends}">
-                        <tr>
-                            <td>${legend.name}</td>
-                            <td>${legend.englishName}</td>
-                            <td>${legend.position}</td>
-                            <td>${legend.skillDesc}</td>
-                            <td>${legend.tacticTip}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
+    <div class="hud-shell">
+        <%@ include file="common/sidebar.jspf" %>
+        <main class="hud-main">
+            <%@ include file="common/topbar.jspf" %>
+
+            <section class="hud-list-grid legend-grid">
+                <c:forEach var="legend" items="${legends}">
+                    <article class="hud-data-card">
+                        <div class="hud-data-head">
+                            <div>
+                                <h2>${legend.name}</h2>
+                                <p>${legend.englishName}</p>
+                            </div>
+                            <span>${legend.position}</span>
+                        </div>
+                        <div class="hud-data-body">
+                            <span class="hud-label">SKILLS</span>
+                            <p>${legend.skillDesc}</p>
+                        </div>
+                        <div class="hud-data-body">
+                            <span class="hud-label">TACTIC</span>
+                            <p>${legend.tacticTip}</p>
+                        </div>
+                    </article>
+                </c:forEach>
+            </section>
+        </main>
     </div>
 </body>
 </html>

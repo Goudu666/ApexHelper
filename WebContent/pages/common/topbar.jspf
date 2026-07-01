@@ -1,0 +1,13 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- 公共顶部栏：显示当前页面标题和运行状态。 --%>
+<header class="hud-top">
+    <div>
+        <p class="hud-kicker">${pageMeta}</p>
+        <h1>${pageTitle}</h1>
+        <p class="muted">${pageSubtitle}</p>
+    </div>
+    <div class="hud-status">
+        <span>LIVE</span>
+        <strong>${sessionScope.user.username}</strong>
+    </div>
+</header>

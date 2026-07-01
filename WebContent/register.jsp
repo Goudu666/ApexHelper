@@ -9,8 +9,18 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell auth-shell">
-        <div class="panel">
+    <div class="auth-console">
+        <section class="auth-copy">
+            <p class="hud-kicker">NEW OPERATOR</p>
+            <h1>创建玩家账号</h1>
+            <p>注册后默认进入普通用户角色，可维护自己的战术笔记。</p>
+            <div class="auth-codes">
+                <span>ROLE: USER</span>
+                <span>SESSION KEY: user</span>
+            </div>
+        </section>
+
+        <div class="panel auth-panel">
             <h1>用户注册</h1>
             <p class="muted">注册账号默认角色为普通用户。</p>
 

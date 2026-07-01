@@ -9,51 +9,56 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell">
-        <div class="topbar">
-            <div>
-                <h1>模拟玩家战绩</h1>
-                <p class="muted">输入昵称关键字查询，留空显示全部模拟数据。</p>
-            </div>
-            <a class="btn" href="${pageContext.request.contextPath}/user/home">返回首页</a>
-        </div>
+    <c:set var="activeNav" value="stat" />
+    <c:set var="pageMeta" value="CAREER RECORD" />
+    <c:set var="pageTitle" value="模拟玩家战绩" />
+    <c:set var="pageSubtitle" value="输入昵称关键字查询，留空显示全部模拟数据。" />
 
-        <form action="${pageContext.request.contextPath}/stat/search" method="get" class="search-form">
-            <input type="text" name="keyword" value="${keyword}" placeholder="例如：Ras">
-            <button type="submit" class="btn primary">查询</button>
-        </form>
+    <div class="hud-shell">
+        <%@ include file="common/sidebar.jspf" %>
+        <main class="hud-main">
+            <%@ include file="common/topbar.jspf" %>
 
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>昵称</th>
-                        <th>段位</th>
-                        <th>总击杀</th>
-                        <th>总伤害</th>
-                        <th>胜场数</th>
-                        <th>常用传奇</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <section class="stat-layout">
+                <form action="${pageContext.request.contextPath}/stat/search" method="get" class="hud-panel search-form">
+                    <label class="sr-only">玩家昵称</label>
+                    <input type="text" name="keyword" value="${keyword}" placeholder="例如：Ras">
+                    <button type="submit" class="btn primary">查询</button>
+                </form>
+
+                <div class="stat-card-grid">
                     <c:forEach var="stats" items="${statsList}">
-                        <tr>
-                            <td>${stats.nickname}</td>
-                            <td>${stats.rankName}</td>
-                            <td>${stats.totalKills}</td>
-                            <td>${stats.totalDamage}</td>
-                            <td>${stats.wins}</td>
-                            <td>${stats.mainLegend}</td>
-                        </tr>
+                        <article class="hud-data-card stat-card">
+                            <div class="hud-data-head">
+                                <div>
+                                    <h2>${stats.nickname}</h2>
+                                    <p>${stats.rankName}</p>
+                                </div>
+                                <span>${stats.mainLegend}</span>
+                            </div>
+                            <div class="weapon-stats">
+                                <div>
+                                    <span>总击杀</span>
+                                    <strong>${stats.totalKills}</strong>
+                                </div>
+                                <div>
+                                    <span>总伤害</span>
+                                    <strong>${stats.totalDamage}</strong>
+                                </div>
+                                <div>
+                                    <span>胜场数</span>
+                                    <strong>${stats.wins}</strong>
+                                </div>
+                            </div>
+                        </article>
                     </c:forEach>
-                    <c:if test="${empty statsList}">
-                        <tr>
-                            <td colspan="6" class="empty">没有匹配的模拟战绩。</td>
-                        </tr>
-                    </c:if>
-                </tbody>
-            </table>
-        </div>
+                </div>
+
+                <c:if test="${empty statsList}">
+                    <div class="hud-panel empty">没有匹配的模拟战绩。</div>
+                </c:if>
+            </section>
+        </main>
     </div>
 </body>
 </html>

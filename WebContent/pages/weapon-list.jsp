@@ -9,43 +9,52 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell">
-        <div class="topbar">
-            <div>
-                <h1>武器数据</h1>
-                <p class="muted">展示武器类型、伤害、弹药类型和推荐场景。</p>
-            </div>
-            <a class="btn" href="${pageContext.request.contextPath}/user/home">返回首页</a>
-        </div>
+    <c:set var="activeNav" value="weapon" />
+    <c:set var="pageMeta" value="ARSENAL" />
+    <c:set var="pageTitle" value="武器数据" />
+    <c:set var="pageSubtitle" value="展示武器类型、伤害、弹药类型和推荐场景。" />
 
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>名称</th>
-                        <th>英文名</th>
-                        <th>类型</th>
-                        <th>身体伤害</th>
-                        <th>头部伤害</th>
-                        <th>弹药</th>
-                        <th>推荐场景</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <div class="hud-shell">
+        <%@ include file="common/sidebar.jspf" %>
+        <main class="hud-main">
+            <%@ include file="common/topbar.jspf" %>
+
+            <section class="weapon-layout">
+                <div class="hud-panel weapon-summary">
+                    <span class="hud-label">COLLECTION</span>
+                    <strong>WEAPON DATABASE</strong>
+                    <p>按课程设计数据库展示当前武器条目，数值来自初始化数据。</p>
+                </div>
+
+                <div class="weapon-grid">
                     <c:forEach var="weapon" items="${weapons}">
-                        <tr>
-                            <td>${weapon.name}</td>
-                            <td>${weapon.englishName}</td>
-                            <td>${weapon.weaponType}</td>
-                            <td>${weapon.damage}</td>
-                            <td>${weapon.headDamage}</td>
-                            <td>${weapon.ammoType}</td>
-                            <td>${weapon.recommendScene}</td>
-                        </tr>
+                        <article class="weapon-card">
+                            <div class="weapon-card-head">
+                                <div>
+                                    <h2>${weapon.name}</h2>
+                                    <p>${weapon.englishName}</p>
+                                </div>
+                                <span>${weapon.weaponType}</span>
+                            </div>
+                            <div class="weapon-stats">
+                                <div>
+                                    <span>身体伤害</span>
+                                    <strong>${weapon.damage}</strong>
+                                </div>
+                                <div>
+                                    <span>头部伤害</span>
+                                    <strong>${weapon.headDamage}</strong>
+                                </div>
+                            </div>
+                            <div class="weapon-meta">
+                                <span>${weapon.ammoType}</span>
+                                <p>${weapon.recommendScene}</p>
+                            </div>
+                        </article>
                     </c:forEach>
-                </tbody>
-            </table>
-        </div>
+                </div>
+            </section>
+        </main>
     </div>
 </body>
 </html>

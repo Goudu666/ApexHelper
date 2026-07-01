@@ -9,50 +9,55 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell">
-        <div class="topbar">
-            <div>
-                <h1>系统日志</h1>
-                <p class="muted">最近 200 条关键操作记录。</p>
-            </div>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/dashboard">返回后台</a>
-        </div>
+    <c:set var="activeNav" value="admin-logs" />
+    <c:set var="pageMeta" value="SYSTEM LOGS" />
+    <c:set var="pageTitle" value="系统日志" />
+    <c:set var="pageSubtitle" value="最近 200 条关键操作记录。" />
 
-        <div class="admin-nav">
-            <a class="btn" href="${pageContext.request.contextPath}/admin/dashboard">系统统计</a>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/users">用户列表</a>
-            <a class="btn primary" href="${pageContext.request.contextPath}/admin/logs">系统日志</a>
-        </div>
+    <div class="hud-shell">
+        <%@ include file="common/sidebar.jspf" %>
+        <main class="hud-main">
+            <%@ include file="common/topbar.jspf" %>
 
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>操作用户</th>
-                        <th>操作类型</th>
-                        <th>操作内容</th>
-                        <th>操作时间</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="log" items="${logs}">
-                        <tr>
-                            <td>${log.id}</td>
-                            <td>${log.username}</td>
-                            <td>${log.actionType}</td>
-                            <td>${log.actionContent}</td>
-                            <td>${log.createTime}</td>
-                        </tr>
-                    </c:forEach>
-                    <c:if test="${empty logs}">
-                        <tr>
-                            <td colspan="5" class="empty">暂无日志。</td>
-                        </tr>
-                    </c:if>
-                </tbody>
-            </table>
-        </div>
+            <section class="hud-panel">
+                <div class="panel-heading">
+                    <div>
+                        <span class="hud-label">AUDIT TRAIL</span>
+                        <h2>关键操作记录</h2>
+                    </div>
+                </div>
+
+                <div class="table-wrap compact-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>操作用户</th>
+                                <th>操作类型</th>
+                                <th>操作内容</th>
+                                <th>操作时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="log" items="${logs}">
+                                <tr>
+                                    <td>${log.id}</td>
+                                    <td>${log.username}</td>
+                                    <td>${log.actionType}</td>
+                                    <td>${log.actionContent}</td>
+                                    <td>${log.createTime}</td>
+                                </tr>
+                            </c:forEach>
+                            <c:if test="${empty logs}">
+                                <tr>
+                                    <td colspan="5" class="empty">暂无日志。</td>
+                                </tr>
+                            </c:if>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
     </div>
 </body>
 </html>

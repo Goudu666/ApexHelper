@@ -9,10 +9,20 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell auth-shell">
-        <div class="panel">
+    <div class="auth-console">
+        <section class="auth-copy">
+            <p class="hud-kicker">APEX//HELPER</p>
+            <h1>TACTICAL COMPANION</h1>
+            <p>登录后进入战术整备面板，查看传奇、武器、笔记和模拟战绩。</p>
+            <div class="auth-codes">
+                <span>普通用户：player / player123</span>
+                <span>管理员：admin / admin123</span>
+            </div>
+        </section>
+
+        <div class="panel auth-panel">
             <h1>用户登录</h1>
-            <p class="muted">普通用户：player / player123；管理员：admin / admin123</p>
+            <p class="muted">输入账号进入对应控制台。</p>
 
             <c:if test="${param.registered == '1'}">
                 <div class="message success">注册成功，请登录。</div>

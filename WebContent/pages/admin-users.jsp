@@ -9,43 +9,48 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
 </head>
 <body>
-    <div class="page-shell">
-        <div class="topbar">
-            <div>
-                <h1>用户列表</h1>
-                <p class="muted">查看系统账号和角色。</p>
-            </div>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/dashboard">返回后台</a>
-        </div>
+    <c:set var="activeNav" value="admin-users" />
+    <c:set var="pageMeta" value="USER ROSTER" />
+    <c:set var="pageTitle" value="用户列表" />
+    <c:set var="pageSubtitle" value="查看系统账号和角色。" />
 
-        <div class="admin-nav">
-            <a class="btn" href="${pageContext.request.contextPath}/admin/dashboard">系统统计</a>
-            <a class="btn primary" href="${pageContext.request.contextPath}/admin/users">用户列表</a>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/logs">系统日志</a>
-        </div>
+    <div class="hud-shell">
+        <%@ include file="common/sidebar.jspf" %>
+        <main class="hud-main">
+            <%@ include file="common/topbar.jspf" %>
 
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>用户名</th>
-                        <th>角色</th>
-                        <th>创建时间</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="user" items="${users}">
-                        <tr>
-                            <td>${user.id}</td>
-                            <td>${user.username}</td>
-                            <td>${user.role}</td>
-                            <td>${user.createTime}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
+            <section class="hud-panel">
+                <div class="panel-heading">
+                    <div>
+                        <span class="hud-label">ACCOUNT LIST</span>
+                        <h2>系统账号</h2>
+                    </div>
+                </div>
+
+                <div class="table-wrap compact-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>用户名</th>
+                                <th>角色</th>
+                                <th>创建时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="user" items="${users}">
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td>${user.username}</td>
+                                    <td>${user.role}</td>
+                                    <td>${user.createTime}</td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
     </div>
 </body>
 </html>
